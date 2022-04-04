@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import styles from "./Cart.module.css";
 import { getTotalPrice, removeFromCart, updateQuantity } from "./cartSlice";
@@ -7,6 +8,7 @@ export function Cart() {
   const products = useAppSelector(state => state.products.products);
   const items = useAppSelector(state => state.cart.items);
   const total = useAppSelector(getTotalPrice);
+  const checkoutState = useAppSelector(state => state.cart.checkoutState);
   const dispatch = useAppDispatch();
 
   const onChangeBlur = (e: React.FocusEvent<HTMLInputElement>, id: string): void => {
@@ -14,10 +16,16 @@ export function Cart() {
     dispatch(updateQuantity({ id, quantity }))
   }
 
+  const tableClasses = classNames({
+    [styles.table]: true,
+    [styles.checkoutError]: checkoutState === 'ERROR',
+    [styles.checkoutLoading]: checkoutState === 'LOADING'
+  })
+
   return (
     <main className="page">
       <h1>Shopping Cart</h1>
-      <table className={styles.table}>
+      <table className={tableClasses}>
         <thead>
           <tr>
             <th>Product</th>
