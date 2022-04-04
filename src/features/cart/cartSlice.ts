@@ -22,11 +22,14 @@ const cartSlice = createSlice({
       } else {
         state.items[id] = 1;
       }
+    },
+    removeFromCart(state, action: PayloadAction<string>) {
+      delete state.items[action.payload]
     }
   }
 });
 
-export const { addCart } = cartSlice.actions;
+export const { addCart, removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
