@@ -12,7 +12,7 @@ export function Products() {
       dispatch(receivedProducts(products));
     });
   }, []);
-  const products = useAppSelector(state => state.priducts.products);
+  const products = useAppSelector(state => state.products.products);
 
   return (
     <main className="page">
