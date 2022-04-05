@@ -2,7 +2,7 @@ import React from "react";
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import styles from "./Cart.module.css";
-import { getTotalPrice, removeFromCart, updateQuantity } from "./cartSlice";
+import { checkout, getTotalPrice, removeFromCart, updateQuantity } from "./cartSlice";
 
 export function Cart() {
   const products = useAppSelector(state => state.products.products);
@@ -18,7 +18,10 @@ export function Cart() {
 
   const onCheckout = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch({ type: 'cart/checkout/pending' })
+    dispatch(checkout());
+    setTimeout(() => {
+      dispatch({ type: 'cart/checkout/fulfilled'});
+    }, 500);
   }
 
   const tableClasses = classNames({
